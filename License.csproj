@@ -1,0 +1,36 @@
+using System;
+using System.Net.Http;
+using Newtonsoft.Json;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Replace with the GitHub repository URL
+        string repositoryUrl = "https://github.com/example/repository";
+
+        // Get the repository name and owner from the URL
+        string[] parts = repositoryUrl.Split('/');
+        string repoOwner = parts[parts.Length - 2];
+        string repoName = parts[parts.Length - 1];
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("User-Agent", "MyApp");
+            var response = client.GetAsync("https://api.github.com/repos/{"+repoOwner+"}/{"+repoName+"}/license").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                var license = JsonConvert.DeserializeObject<License>(json);
+                Console.WriteLine("License: " + license.name);
+                Console.WriteLine("URL: " + license.url);
+            }
+        }
+    }
+}
+
+class License
+{
+    public string name { get; set; }
+    public string url { get; set; }
+}
