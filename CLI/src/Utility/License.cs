@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Reactive.Joins;
 //using System.Text.Json.Serialization;
 
-namespace ECE461Project1
+namespace Utility
 {
     public class License : IScoreMetric
     {

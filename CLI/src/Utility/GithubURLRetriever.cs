@@ -4,7 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ECE461Project1
+namespace Utility
 {
     /// <summary>
     /// Handles loading & converting github urls from a file containing github urls and npmjs urls

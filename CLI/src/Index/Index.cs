@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace ECE461Project1
+namespace Index
 {
     class Program
     {

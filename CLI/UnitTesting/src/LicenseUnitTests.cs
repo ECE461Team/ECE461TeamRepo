@@ -2,7 +2,7 @@
 using ECE461Project1;
 using static System.Net.WebRequestMethods;
 
-namespace UnitTestsProj
+namespace UnitTesting;
 {
     [TestClass]
     public class LicenseUnitTests

@@ -2,7 +2,7 @@
 using ECE461Project1;
 using System.Collections.Generic;
 
-namespace UnitTestsProj
+namespace UnitTesting;
 {
     [TestClass]
     public class GetGitUrlsUnitTests
