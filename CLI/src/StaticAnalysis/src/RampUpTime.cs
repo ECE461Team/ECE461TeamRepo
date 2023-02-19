@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace Grader;
+namespace StaticAnalysis;
 public class RampUpTime : IScoreMetric
 {
     const int maxNumLines = 400000;

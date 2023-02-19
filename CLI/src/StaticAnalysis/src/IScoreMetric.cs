@@ -1,4 +1,4 @@
-﻿namespace Grader;
+﻿namespace StaticAnalysis;
 public interface IScoreMetric
 {
     float metricWeight { get; }

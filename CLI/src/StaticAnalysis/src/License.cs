@@ -4,9 +4,10 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Reactive.Joins;
+using Utility;
 //using System.Text.Json.Serialization;
 
-namespace Utility
+namespace StaticAnalysis
 {
     public class License : IScoreMetric
     {

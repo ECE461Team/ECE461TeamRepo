@@ -3,14 +3,14 @@ using System.Text;
 using System.Net.Http;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-
+using Utility;
 using GraphQL;
 using GraphQL.Client;
 using GraphQL.Common.Request;
 using GraphQL.Client.Serializer.Newtonsoft;
 using System.Threading.Tasks;
 
-namespace Grader
+namespace StaticAnalysis
 {
     public class BusFactor : IScoreMetric
     {

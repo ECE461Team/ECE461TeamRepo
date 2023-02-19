@@ -1,8 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Grader\Grader.csproj" />
-    <ProjectReference Include="..\Logger\Logger.csproj" />
     <ProjectReference Include="..\StaticAnalysis\StaticAnalysis.csproj" />
     <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
