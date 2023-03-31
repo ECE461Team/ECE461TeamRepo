@@ -1,0 +1,85 @@
+#!/bin/bash
+#export $(cat .env | xargs)
+#log environment variables $LOG_PATH and $LOG_LEVEL
+loglevel="${LOG_LEVEL:-1}"
+logfullpath="${LOG_FILE:-/home/shay/a/lin1285/ECE461SoftwareEngineeringProject/cache/log2.txt}"
+ghtoken="${GITHUB_TOKEN:-faketokengithub1111111111111111111111111}"
+#sets up cache folder
+mkdir -p cache
+mkdir -p modules
+touch cache/build.txt
+
+function logInfo() {
+    #make cache folder if it doesnt exist
+    makeCaches
+
+    if [ $loglevel -gt 0 ] 
+    then
+    echo "[BUILD|Priority: 1(info)] $1" | tee -a $logfullpath cache/build.txt >/dev/null
+    fi
+}
+
+function logDebug() {
+    if [ $loglevel -gt 1 ] 
+    then
+    echo -e $1
+    echo "[BUILD|Priority: 2(debug)] $1" | tee -a $logfullpath cache/build.txt >/dev/null
+    fi
+}
+
+
+case "$1" in 
+    "build")
+        logDebug "Building... \n"
+
+        logDebug "Building StaticAnalysis..."
+        dotnet publish src/StaticAnalysis -r linux-x64 -p:PublishSingleFile=true --self-contained true | tee -a $logfullpath cache/build.txt >/dev/null
+        
+        logDebug "Building Utility..."
+        dotnet publish src/Utility -r linux-x64 -p:PublishSingleFile=true --self-contained true | tee -a $logfullpath cache/build.txt >/dev/null
+        
+        logDebug "Building Index..."
+        dotnet publish src/Index -r linux-x64 -p:PublishSingleFile=true --self-contained true | tee -a $logfullpath cache/build.txt >/dev/null
+
+        logDebug "Building UnitTest..."
+        dotnet publish UnitTesting -r linux-x64 -p:PublishSingleFile=true --self-contained true | tee -a $logfullpath cache/build.txt >/dev/null
+        
+        logDebug "\nBuild Complete"
+    ;;
+    "test")
+    logInfo "Testing..."
+    dotnet test UnitTest -l "console;verbosity=detailed"
+    ;;
+    "install")
+        logDebug "Downloading Dependencies...\n"
+        
+        pip install GitPython | tee -a $logfullpath cache/build.txt >/dev/null
+        
+        cd src/Index
+        dotnet add package CliWrap --version 3.6.0 | tee -a $logfullpath ../../cache/build.txt >/dev/null
+        cd ../..
+
+        cd src/StaticAnalysis
+        dotnet add package Newtonsoft.Json | tee -a $logfullpath ../../cache/build.txt >/dev/null
+        dotnet add package GraphQL | tee -a $logfullpath ../../cache/build.txt >/dev/null
+        dotnet add package GraphQL.Client | tee -a $logfullpath ../../cache/build.txt >/dev/null
+        dotnet add package GraphQL.Client.Serializer.Newtonsoft | tee -a $logfullpath ../../cache/build.txt >/dev/null
+        dotnet add package GraphQL.Common | tee -a $logfullpath ../../cache/build.txt >/dev/null
+        cd ../..
+
+        cd UnitTest
+        dotnet add package coverlet.msbuild | tee -a $logfullpath ../cache/build.txt >/dev/null
+        cd ..
+
+        logDebug "Dependencies Installed"
+    ;;
+    "clean")
+        rm -rf cache
+        rm -rf modules
+    ;;
+    *)
+        cd src/Index
+        dotnet run $1 $loglevel $logfullpath $ghtoken
+        cd ../..
+    ;;
+esac

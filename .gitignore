@@ -1,3 +1,5 @@
+.vscode
+
 # globs
 Makefile.in
 *.userprefs
@@ -92,7 +94,6 @@ $RECYCLE.BIN/
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 
@@ -403,3 +404,6 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+
+#remove .env
+*.env
